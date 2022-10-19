@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">Заказы на АЗС</string>
+    <string name="nextStr">Новый заказ</string>
+    <string name="literStr">Количество литров</string>
+    <string name="finishStr">Завершить смену</string>
+    <string name="OILTipeStr">Вид топлива</string>
+    <string-array name="oilTypes">
+        <item>АИ-92</item>
+        <item>АИ-95</item>
+        <item>АИ-98</item>
+        <item>АИ-100</item>
+    </string-array>
+    <string-array name="oilTypesPrice">
+        <item>92.0</item>
+        <item>95.0</item>
+        <item>98.0</item>
+       <item>100.0</item>
+    </string-array>
+
+</resources>
