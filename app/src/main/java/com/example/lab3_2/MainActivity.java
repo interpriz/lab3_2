@@ -2,6 +2,8 @@ package com.example.lab3_2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -17,6 +19,7 @@ import java.util.Hashtable;
 
 public class MainActivity extends AppCompatActivity {
 
+    public Context mainActivity = this;
     EditText inputLiters;
     TextView viewStatistics;
     Button buttonNext, buttonFinish;
@@ -25,6 +28,8 @@ public class MainActivity extends AppCompatActivity {
 
     String[] oilTypes;
     String[] oilPrices;
+
+    boolean firstPress = true;//первое ли нажатие на кнопку
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +42,6 @@ public class MainActivity extends AppCompatActivity {
         buttonFinish = findViewById(R.id.button2);
         viewStatistics = findViewById(R.id.textView5);
 
-
-
         oilTypes  = getResources().getStringArray(R.array.oilTypes);
         oilPrices = getResources().getStringArray(R.array.oilTypesPrice);
         if(oilTypes.length==oilPrices.length){
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
             Order.oilPrices = new Hashtable<>();
             for(int i = 0; i< oilTypes.length; i++){
                 Order.oilPrices.put(oilTypes[i], Double.parseDouble(oilPrices[i]));
-                dropDownList.add(oilTypes[i]+" : "+oilPrices[i]);
+                dropDownList.add(oilTypes[i]+" : "+oilPrices[i]+" руб");
             }
 
 
@@ -65,42 +68,72 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+        if (getIntent().getExtras() != null) {
+            String statistics = getIntent().getExtras().getString("statistics");
+            viewStatistics.setText(statistics);
+        }
+
+
     }
 
 
 
     public void NextOrder(View view) {
+        if (firstPress) {
 
+            inputLiters.setVisibility(View.VISIBLE);
+            viewStatistics.setVisibility(View.VISIBLE);
+            buttonNext.setText("Новый заказ");
+            buttonNext.setVisibility(View.VISIBLE);
+            buttonFinish.setVisibility(View.VISIBLE);
+            inputOilTypeSelect.setVisibility(View.VISIBLE);
 
-
-        String oiltype = inputOilTypeSelect.getSelectedItem().toString().split(" : ")[0];
-
-        if(!inputLiters.getText().toString().isEmpty()) {
-            double liters = Double.parseDouble(inputLiters.getText().toString());
-            Order newOrder = new Order(oiltype, liters);
-            orders.add(newOrder);
-            inputLiters.setText("");
             viewStatistics.setText("");
-        } else {
-            Toast toast = Toast.makeText(this, "Не все поля заполнены!",Toast.LENGTH_LONG);
-            toast.show();
+
+
+            firstPress = false;
+        }else{
+            String oiltype = inputOilTypeSelect.getSelectedItem().toString().split(" : ")[0];
+
+            if(!inputLiters.getText().toString().isEmpty()) {
+                double liters = Double.parseDouble(inputLiters.getText().toString());
+                Order newOrder = new Order(oiltype, liters);
+                orders.add(newOrder);
+                inputLiters.setText("");
+                viewStatistics.setText("");
+            } else {
+                Toast toast = Toast.makeText(this, "Не все поля заполнены!",Toast.LENGTH_LONG);
+                toast.show();
+            }
         }
+
+
     }
 
     public void FinishRegistration(View view) {
+
+
         String statistics = new String();
         double[] totalPrices = new double[oilTypes.length];
+        float[] totalLiters = new float[oilTypes.length];
         double totalPrice = 0;
         for (Order order : orders) {
             int indexOfType = Arrays.asList(oilTypes).indexOf(order.oilType);
             totalPrices[indexOfType]+=order.getPrice();
+            totalLiters[indexOfType]+=order.liters;
             totalPrice+=order.getPrice();
         }
+        statistics+= String.format("%-15s %-15s %-15s %n", "Вид","Литры","Общая стоимость");
         for(int i=0; i< oilTypes.length;i++){
-            statistics+= oilTypes[i]+" : "+ totalPrices[i] +"руб \r\n";
+            statistics+= String.format("%-15s %-15s %-15s %n",oilTypes[i],totalLiters[i],totalPrices[i] +" руб");
         }
         statistics+= "Общая выручка : "+ totalPrice +"руб \r\n";
-        viewStatistics.setText(statistics);
+
+        Intent intent = new Intent(this.mainActivity, MainActivity.class);
+        intent.putExtra("statistics", statistics);
+        startActivity(intent);
+        Toast toast = Toast.makeText(this, "Смена окончена", Toast.LENGTH_SHORT);
+        toast.show();
     }
 
 }

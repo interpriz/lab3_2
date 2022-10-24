@@ -14,33 +14,28 @@
         android:layout_marginRight="7dp"
         android:layout_marginBottom="7dp"
         android:paddingTop="10dp"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:weightSum="10">
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:weightSum="2"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp">
+            android:layout_gravity="center_horizontal"
+            android:text="@string/OILTipeStr"
+            android:textAlignment="center"
+            android:visibility="invisible">
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:text="@string/OILTipeStr"
-                android:layout_weight="1">
+        </TextView>
 
-            </TextView>
-
-            <Spinner
-                android:id="@+id/planets_spinner"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textAlignment="center"
-                android:layout_weight="1"
-                />
-        </LinearLayout>
+        <Spinner
+            android:id="@+id/planets_spinner"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
+            />
 
 
         <EditText
@@ -52,35 +47,58 @@
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
             android:hint="@string/literStr"
+
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
+            android:visibility="invisible"
             />
 
 
 
-        <Button
+        <Button style="@style/RoundedCornerButton"
+            android:background="@drawable/custom_buttons"
             android:id="@+id/button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:onClick="NextOrder"
-            android:text="@string/nextStr"
+            android:text="Начать смену"
+
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
             />
 
-        <Button
+        <Button style="@style/RoundedCornerButton"
+            android:background="@drawable/custom_buttons"
             android:id="@+id/button2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="50dp"
             android:layout_marginEnd="50dp"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             android:onClick="FinishRegistration"
             android:text="@string/finishStr"
+
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible"
             />
 
         <TextView
             android:id="@+id/textView5"
             android:layout_width="match_parent"
             android:layout_height="227dp"
-            android:layout_marginTop="30dp"
+
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="4dp"
+            android:layout_marginTop="4dp"
             />
     </LinearLayout>
 

@@ -5,9 +5,9 @@
     <string name="finishStr">Завершить смену</string>
     <string name="OILTipeStr">Вид топлива</string>
     <string-array name="oilTypes">
-        <item>АИ-92</item>
-        <item>АИ-95</item>
-        <item>АИ-98</item>
+        <item>АИ-92 </item>
+        <item>АИ-95 </item>
+        <item>АИ-98 </item>
         <item>АИ-100</item>
     </string-array>
     <string-array name="oilTypesPrice">
